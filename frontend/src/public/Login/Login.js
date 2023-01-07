@@ -26,7 +26,8 @@ function Login() {
                     history.push('/settings');
             })
             .catch(err => {
-                setError(err);
+                console.error(err);
+                setError(`Invalid user and/or password!`);
 
             })
 
@@ -48,7 +49,7 @@ function Login() {
                             </Link>
 
                             <div className="col-12 d-flex align-items-center justify-content-center">
-                                <div className="bg-white shadow border-0 rounded border-light p-sm-5 w-100 fmxw-500 ">
+                                <div className="bg-white shadow border-0 rounded border-light p-4 w-100 fmxw-400">
                                     <div className="text-center">
                                         <img src="/img/favicon/logoapenas.png" alt="GoldMart" width={70} />
                                     </div>

@@ -7,7 +7,7 @@ function doLogin(req, res, next) {
             && password === '123') {
             res.sendStatus(200);
 
-        } else
+        }else
             res.sendStatus(401);
 }
 function doLogout(req, res, next) {
