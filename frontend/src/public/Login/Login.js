@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { doLogin } from '../../services/AuthService';
 
+
 function Login() {
     const history = useHistory();
     const [email, setEmail] = useState('');
@@ -21,9 +22,11 @@ function Login() {
         event.preventDefault();
 
         doLogin(email, password)
-            .then(isValid => {
-                if (isValid)
+            .then(response => {
+                if (response) {
+                    localStorage.setItem('token', response.token);
                     history.push('/settings');
+                }
             })
             .catch(err => {
                 console.error(err);
@@ -36,7 +39,7 @@ function Login() {
 
     return (
 
-        <div>
+
             <main>
                 <section className="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
                     <div className="container">
@@ -124,7 +127,6 @@ function Login() {
                     </div>
                 </section>
             </main>
-        </div>
 
     )
 

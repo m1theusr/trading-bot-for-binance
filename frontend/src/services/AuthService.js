@@ -8,9 +8,10 @@ export async function doLogin(email, password) {
     return response.data;
 
 }
-export async function doLogout(){
-    const loginUrl = `${API_URL}/logout`;
-    const response = await axios.post (loginUrl);
+export async function doLogout(token){
+    const logoutUrl = `${API_URL}/logout`;
+    const headers = {'authorization':token};
+    const response = await axios.post (logoutUrl, {}, {headers});
     return response.data;
 
 
