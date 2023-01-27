@@ -1,2 +1,2 @@
 # trader-exchange
-Traderbot for Finance
+Traderbot for Binance
