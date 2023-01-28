@@ -1,14 +1,16 @@
 'use strict';
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
-const crypto = require ('../src/utils/crypto');
+const crypto = require('../src/utils/crypto');
 
 
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('settings', [{
+    const settingsId = await queryInterface.rawSelect('settings', { where: {}, limit: 1 }, ['id']);
+    if (!settingsId) {
+      return queryInterface.bulkInsert('settings', [{
         email: 'matheus@gmail.com',
         password: bcrypt.hashSync('M1theuss'),
         apiUrl: 'https://testenet.binance.vision/api/',
@@ -17,12 +19,12 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
 
-    }])
-
+      }])
+    }
   },
 
-  down: async (queryInterface, Sequelize) =>{
-      return queryInterface.bulkDelete ('settings', null, {});
-}
+  down: async (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('settings', null, {});
+  }
 
 }
