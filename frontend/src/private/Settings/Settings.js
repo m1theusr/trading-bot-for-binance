@@ -1,31 +1,38 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from 'react-router-dom';
-import { getSettings } from "../../services/SettingsService";
-import { doLogout } from '../../services/AuthService';
+import React, { useEffect, useState, useRef } from "react";
+import { useHistory } from 'react-router-dom';
+import { getSettings, updateSettings } from "../../services/SettingsService";
 import Menu from "../../components/Menu/Menu";
 
 
 function Settings() {
 
+    const inputEmail = useRef('');
+    const inputNewPassword = useRef('');
+    const inputConfirmPassword = useRef('');
+    const inputApiUrl = useRef('');
+    const inputAcessKey = useRef('');
+    const inputSecretKey = useRef('');
+
+
     const history = useHistory();
 
     const [error, setError] = useState('');
 
-    const [settings, setSettings] = useState({
-        email: '',
-        apiUrl: '',
-        accessKey: '',
-        keySecret: ''
+    const [success, setSuccess] = useState('');
 
-    })
+
     useEffect(() => {
 
         const token = localStorage.getItem("token");
 
         getSettings(token)
-            .then(response => {
-                setSettings(response);
+            .then(settings => {
+                inputEmail.current.value = settings.email;
+                inputApiUrl.current.value = settings.apiUrl;
+                inputAcessKey.current.value = settings.accessKey;
+
+
             })
             .catch(err => {
                 if (err.response && err.response.status === 401)
@@ -39,40 +46,131 @@ function Settings() {
 
     }, [])
 
-    function onLogoutClick(event) {
+    function onFormSubmit(event) {
+        event.preventDefault();
+        if (inputNewPassword.current.value || inputConfirmPassword.current.value
+            && inputNewPassword.current.value !== inputConfirmPassword.current.value) {
+            return setError('The fields NewPassword and ConfirmPassword most be equals!');
+        }
         const token = localStorage.getItem('token');
-        doLogout(token)
-            .then(response => {
-                localStorage.removeItem('token');
-                history.push('/');
-            })
-            .catch(err => {
-                setError(err.message);
+        updateSettings({
+            email: inputEmail.current.value,
+            password: inputNewPassword.current.value ? inputNewPassword.current.value : null,
+            apiUrl: inputApiUrl.current.value,
+            accessKey: inputAcessKey.current.value,
+            secretKey: inputSecretKey.current.value ? inputSecretKey.current.value : null,
+        }, token)
+        .then(result =>{
+            if(result){
+                setError('');
+                setSuccess('Settings updated successfuly!')
+                inputSecretKey.current.value = '';
+                inputNewPassword.current.value = '';
+                inputConfirmPassword.current.value = '';
+            }else{
+                setSuccess('');
+                console.error(error.message);
+                setError(`Can't update the settings.`);
+            }
 
-            })
+        })
+        .catch(error =>{
 
+
+        })
     }
+
+
 
     return (
 
         <React.Fragment>
             <Menu />
-        <main>
-            <section className="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
-                <div className="container">
-                    {settings.email}
-                    <button type="button" className="btn btn-primary" onClick={onLogoutClick}>Logout</button>
-                    {
-                        error
-                            ? <div className="alert alert-danger"> {error}</div>
-                            : <React.Fragment></React.Fragment>
-                    }
-
+            <main className="content">
+                <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                    <div className="d-block mb-4 mb mb-0">
+                        <h1 className="h4">Settings</h1>
+                    </div>
                 </div>
+                <div className="row">
+                    <div className="col-12">
+                        <div className="card card-body border-0 shadow mb-4">
+                            <h2 className="h5 mb-4">General Info</h2>
+                            {
+                                error ?
+                                    <div className="alert alert-danger mt-2 col-9py-2">{error}</div>
+                                    : <React.Fragment></React.Fragment>
+                            }
+                            {
+                                success ?
+                                    <div className="alert alert-success mt-2 col-9py-2">{success}</div>
+                                    : <React.Fragment></React.Fragment>
+                            }
+                            <form onSubmit={onFormSubmit}>
+                                <div className="row">
+                                    <div className="col-md-6 mb-3">
+                                        <div className="form-group">
+                                            <label htmlFor="email">Email</label>
+                                            <input ref={inputEmail} className="form-control" id="email" type="email" placeholder="example@gmail.com" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-6 mb-3">
+                                        <div className="form-group">
+                                            <label htmlFor="Password">New Password</label>
+                                            <input ref={inputNewPassword} className="form-control" id="newpassword" type="password" placeholder="Password" />
+                                        </div>
+                                    </div>
 
-            </section>
-        </main>
-        </React.Fragment>
+
+                                    <div className="col-md-6 mb-3">
+                                        <div className="form-group">
+                                            <label htmlFor="ConfirmPassword">Confirm Password</label>
+                                            <input ref={inputConfirmPassword} className="form-control" id="confirmpassword" type="password" placeholder="ConfirmPassword" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <h2 className="h5 my-4">Exchange Info</h2>
+                                <div className="row">
+                                    <div className="col-sm12 mb-3">
+                                        <div className="form-group">
+                                            <label htmlFor="apiUrl">API URL</label>
+                                            <input ref={inputApiUrl} className="form-control" id="apiUrl" type="text" placeholder="Enter the API URL." />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-sm12 mb-3">
+                                        <div className="form-group">
+                                            <label htmlFor="apiUrl">Access Key</label>
+                                            <input ref={inputAcessKey} className="form-control" id="accesskey" type="text" placeholder="Enter the Access Key." />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-sm12 mb-3">
+                                        <div className="form-group">
+                                            <label htmlFor="apiUrl">Secret Key</label>
+                                            <input ref={inputSecretKey} className="form-control" id="secretkey" type="password" placeholder="Enter the secret Key." />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="d-flex justify-content-between flex-wrap flex-md-nowrap">
+                                        <div className="col-sm-3">
+                                            <button className="btn btn-gray-800 mt-2 animate-up-2" type="submit">Save All</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </React.Fragment >
     )
 
 }
