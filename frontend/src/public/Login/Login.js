@@ -54,7 +54,7 @@ function Login() {
                             <div className="col-12 d-flex align-items-center justify-content-center">
                                 <div className="bg-white shadow border-0 rounded border-light p-4 w-100 fmxw-400">
                                     <div className="text-center">
-                                        <img src="/img/favicon/logoapenas.png" alt="GoldMart" width={70} />
+                                        <img src="/img/favicon/MR_150x150.png" alt="MR-Exchange" width={110} />
                                     </div>
                                     <div className="text-center text-md-center mb-3 mt-md-0">
                                         <h1 className="mb-0 h5">Sign in to our platform</h1>
