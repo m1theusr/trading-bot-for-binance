@@ -86,7 +86,7 @@ function Settings() {
 
         <React.Fragment>
             <Menu />
-            <main className="content">
+            <main className="bg-gray-200 content">
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
                     <div className="d-block mb-4 mb mb-0">
                         <h1 className="h4">Settings</h1>
@@ -159,7 +159,7 @@ function Settings() {
                                 <div className="row">
                                     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap">
                                         <div className="col-sm-3">
-                                            <button className="btn btn-gray-800 mt-2 animate-up-2" type="submit">Save All</button>
+                                            <button className="btn btn-gray-700 mt-2" type="submit">Save All</button>
                                         </div>
 
                                     </div>

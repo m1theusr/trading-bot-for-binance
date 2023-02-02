@@ -33,7 +33,7 @@ function SideBar() {
                     <li className="nav-item">
                         <Link to="/dashboard" className="nav-link d-flex align-items-center">
                             <span className="sidebar-icon">
-                                <img src="/img/brand/MR_transp.png" height="40" width="85" alt="MR-Trading"></img>
+                                <img src="/img/brand/mr_green.png" height="60" width="63" alt="MR-Trading"></img>
                             </span>
                             <span className="mt-1 ms-1 sidebar-text">Overview</span>
                         </Link>
