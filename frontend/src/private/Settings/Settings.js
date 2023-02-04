@@ -60,24 +60,26 @@ function Settings() {
             accessKey: inputAcessKey.current.value,
             secretKey: inputSecretKey.current.value ? inputSecretKey.current.value : null,
         }, token)
-        .then(result =>{
-            if(result){
-                setError('');
-                setSuccess('Settings updated successfuly!')
-                inputSecretKey.current.value = '';
-                inputNewPassword.current.value = '';
-                inputConfirmPassword.current.value = '';
-            }else{
+            .then(result => {
+                if (result) {
+                    setError('');
+                    setSuccess('Settings updated successfully!')
+                    inputSecretKey.current.value = '';
+                    inputNewPassword.current.value = '';
+                    inputConfirmPassword.current.value = '';
+                } else {
+                    setSuccess('');
+                    setError(`Can't update the settings.`);
+                }
+
+            })
+            .catch(error => {
                 setSuccess('');
                 console.error(error.message);
                 setError(`Can't update the settings.`);
-            }
-
-        })
-        .catch(error =>{
 
 
-        })
+            })
     }
 
 
@@ -98,12 +100,17 @@ function Settings() {
                             <h2 className="h5 mb-4">General Info</h2>
                             {
                                 error ?
-                                    <div className="alert alert-danger mt-2 col-9py-2">{error}</div>
+                                    <div className="alert alert-danger mt-2 col-9py-2">{error}
+                                        <buttom className="btn-close" data-bs-dismiss="alert"></buttom>
+                                    </div>
+
                                     : <React.Fragment></React.Fragment>
                             }
                             {
                                 success ?
-                                    <div className="alert alert-success mt-2 col-9py-2">{success}</div>
+                                    <div className="alert alert-success alert-dismissible mt-2 col-9py-2 fade show">{success}
+                                        <buttom className="btn-close" data-bs-dismiss="alert"></buttom>
+                                    </div>
                                     : <React.Fragment></React.Fragment>
                             }
                             <form onSubmit={onFormSubmit}>

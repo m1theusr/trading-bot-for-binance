@@ -7,12 +7,15 @@ const authController = require ('./controllers/authController');
 const authMiddleware = require('./middlewares/authMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const settingsController = require ('./controllers/settingsController')
+const morgan = require ("morgan");
 
-app.use(cors());
+app.use(cors({origin: process.env.CORS_ORIGIN}));
 
 app.use(helmet());
 
 app.use(express.json());
+
+app.use(morgan('dev'));
 
 app.post('/login', authController.doLogin);
 

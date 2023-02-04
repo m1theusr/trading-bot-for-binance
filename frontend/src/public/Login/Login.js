@@ -89,11 +89,11 @@ function Login() {
                                                         Remember me
                                                     </label>
                                                 </div>
-                                                <div><a href="/forgot-password" class="small text-right">Lost password? </a></div>
+                                                <div><a href="/forgot-password" className="small text-right">Lost password? </a></div>
 
                                             </div>
                                             <div className="d-grid">
-                                                <button type="submit" class="text-white btn btn-gray-600">Login</button>
+                                                <button type="submit" className="text-white btn btn-gray-600">Login</button>
                                             </div>
 
                                         </div>
