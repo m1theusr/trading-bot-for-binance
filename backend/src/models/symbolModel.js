@@ -32,4 +32,4 @@ const symbolModel = database.define('symbol', {
     updatedAt: Sequelize.DATE
 })
 
-module.exports = settingsModel;
+module.exports = symbolModel;
