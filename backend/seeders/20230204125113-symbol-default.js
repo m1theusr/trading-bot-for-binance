@@ -9,7 +9,7 @@ module.exports = {
         basePrecision: 8,
         quotePrecision: 8,
         minNotional: '0.1',
-        minLoteSize: '0.1',
+        minLotSize: '0.1',
         isFavorite: true,
         createdAt: new Date(),
         updatedAt: new Date(),

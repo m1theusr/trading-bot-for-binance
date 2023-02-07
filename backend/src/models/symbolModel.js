@@ -19,8 +19,8 @@ const symbolModel = database.define('symbol', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    minLoteSize: {
-        type: Sequelize.INTEGER,
+    minLotSize: {
+        type: Sequelize.STRING,
         allowNull: false,
     },
     isFavorite: {

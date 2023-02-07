@@ -1,4 +1,3 @@
-const {getSymbol} = require ('../controllers/symbolsController');
 const symbolModel = require('../models/symbolModel');
 
 
@@ -16,19 +15,20 @@ function getSymbol(symbol) {
 async function updateSymbol(symbol, newSymbol) {
     const currentSymbol = await getSymbol(symbol);
 
-    if (newSymbol.basePrecision !== currentSymbol.basePrecision)
+    if (newSymbol.basePrecision && newSymbol.basePrecision !== currentSymbol.basePrecision)
         currentSymbol.basePrecision = newSymbol.basePrecision;
 
-    if (newSymbol.quotePrecision !== currentSymbol.quotePrecision)
+    if (newSymbol.quotePrecision &&newSymbol.quotePrecision !== currentSymbol.quotePrecision)
         currentSymbol.quotePrecision = newSymbol.quotePrecision;
 
-    if (newSymbol.minNotional !== currentSymbol.minNotional)
+    if (newSymbol.minNotional &&newSymbol.minNotional !== currentSymbol.minNotional)
         currentSymbol.minNotional = newSymbol.minNotional;
 
-    if (newSymbol.minLotSize !== currentSymbol.minLotSize)
+    if (newSymbol.minLotSize &&newSymbol.minLotSize !== currentSymbol.minLotSize)
         currentSymbol.minLotSize = newSymbol.minLotSize;
 
-    if (newSymbol.isFavorite !== currentSymbol.isFavorite)
+    if (newSymbol.isFavorite !== null && newSymbol.isFavorite !== undefined &&
+         newSymbol.isFavorite !== currentSymbol.isFavorite)
         currentSymbol.isFavorite = newSymbol.isFavorite;
 
     await currentSymbol.save();
@@ -38,9 +38,19 @@ async function syncSymbols(symbols){
 
 }
 
+async function deleteAll(){
+    return symbolModel.destroy({truncate: true});
+}
+
+async function bulkInsert(symbols){
+    return symbolModel.bulkCreate(symbols);
+}
+
 module.exports = {
     getSymbols,
     getSymbol,
     updateSymbol,
-    syncSymbols
+    syncSymbols,
+    deleteAll,
+    bulkInsert
 }
