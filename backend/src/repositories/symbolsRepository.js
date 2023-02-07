@@ -1,18 +1,20 @@
+const {getSymbol} = require ('../controllers/symbolsController');
 const symbolModel = require('../models/symbolModel');
+
 
 function getSymbols() {
     return symbolModel.findAll();
 
 }
 
-function getSymbol() {
+function getSymbol(symbol) {
     return symbolModel.findOne({ where: { symbol } });
 
 }
 
 
 async function updateSymbol(symbol, newSymbol) {
-    const currentSymbol = await updateSymbol(symbol);
+    const currentSymbol = await getSymbol(symbol);
 
     if (newSymbol.basePrecision !== currentSymbol.basePrecision)
         currentSymbol.basePrecision = newSymbol.basePrecision;
