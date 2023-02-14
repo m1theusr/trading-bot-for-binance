@@ -25,7 +25,7 @@ function SideBar() {
 
     }
     return (<React.Fragment>
-        <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-900 text-white collapse shadow" data-simplebar>
+        <nav id="sidebarMenu" className="sidebar d-lg-block bg-black text-white collapse shadow" data-simplebar>
             <div className="sidebar-inner px-4 pt-3">
 
                 <ul className="nav flex-column pt-3 pt-md-0">
