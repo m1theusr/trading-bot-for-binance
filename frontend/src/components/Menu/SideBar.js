@@ -25,7 +25,7 @@ function SideBar() {
 
     }
     return (<React.Fragment>
-        <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
+        <nav id="sidebarMenu" className="sidebar d-lg-block bg-black text-white collapse shadow" data-simplebar>
             <div className="sidebar-inner px-4 pt-3">
 
                 <ul className="nav flex-column pt-3 pt-md-0">
@@ -33,7 +33,7 @@ function SideBar() {
                     <li className="nav-item">
                         <Link to="/dashboard" className="nav-link d-flex align-items-center">
                             <span className="sidebar-icon">
-                                <img src="/img/brand/MR_transp.png" height="40" width="85" alt="MR-Trading"></img>
+                                <img src="/img/brand/mr_green.png" height="60" width="63" alt="MR-Trading"></img>
                             </span>
                             <span className="mt-1 ms-1 sidebar-text">Overview</span>
                         </Link>
@@ -96,7 +96,7 @@ function SideBar() {
                                 <span className="sidebar-icon">
                                     <svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path></svg>
                                 </span>
-                                <span className="sidebar-text">Page examples</span>
+                                <span className="sidebar-text">Extracts</span>
                             </span>
                             <span className="link-arrow">
                                 <svg className="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>

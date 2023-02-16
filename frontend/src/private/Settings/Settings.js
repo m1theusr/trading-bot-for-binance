@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import { getSettings, updateSettings } from "../../services/SettingsService";
 import Menu from "../../components/Menu/Menu";
-
+import Symbols from "./Symbols";
 
 function Settings() {
 
@@ -60,24 +60,26 @@ function Settings() {
             accessKey: inputAcessKey.current.value,
             secretKey: inputSecretKey.current.value ? inputSecretKey.current.value : null,
         }, token)
-        .then(result =>{
-            if(result){
-                setError('');
-                setSuccess('Settings updated successfuly!')
-                inputSecretKey.current.value = '';
-                inputNewPassword.current.value = '';
-                inputConfirmPassword.current.value = '';
-            }else{
+            .then(result => {
+                if (result) {
+                    setError('');
+                    setSuccess('Settings updated successfully!')
+                    inputSecretKey.current.value = '';
+                    inputNewPassword.current.value = '';
+                    inputConfirmPassword.current.value = '';
+                } else {
+                    setSuccess('');
+                    setError(`Can't update the settings.`);
+                }
+
+            })
+            .catch(error => {
                 setSuccess('');
                 console.error(error.message);
                 setError(`Can't update the settings.`);
-            }
-
-        })
-        .catch(error =>{
 
 
-        })
+            })
     }
 
 
@@ -86,24 +88,29 @@ function Settings() {
 
         <React.Fragment>
             <Menu />
-            <main className="content">
+            <main className="text-gray-300 bg-gray-800 content">
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-                    <div className="d-block mb-4 mb mb-0">
+                    <div className="d-block mb-2 mb mb-0">
                         <h1 className="h4">Settings</h1>
                     </div>
                 </div>
-                <div className="row">
+                <div className="text-white row">
                     <div className="col-12">
-                        <div className="card card-body border-0 shadow mb-4">
+                        <div className="bg-black card card-body shadow mb-4">
                             <h2 className="h5 mb-4">General Info</h2>
                             {
                                 error ?
-                                    <div className="alert alert-danger mt-2 col-9py-2">{error}</div>
+                                    <div className="alert alert-danger mt-2 col-9py-2">{error}
+                                        <buttom className="btn-close" data-bs-dismiss="alert"></buttom>
+                                    </div>
+
                                     : <React.Fragment></React.Fragment>
                             }
                             {
                                 success ?
-                                    <div className="alert alert-success mt-2 col-9py-2">{success}</div>
+                                    <div className="alert alert-success alert-dismissible mt-2 col-9py-2 fade show">{success}
+                                        <buttom className="btn-close" data-bs-dismiss="alert"></buttom>
+                                    </div>
                                     : <React.Fragment></React.Fragment>
                             }
                             <form onSubmit={onFormSubmit}>
@@ -111,7 +118,7 @@ function Settings() {
                                     <div className="col-md-6 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
-                                            <input ref={inputEmail} className="form-control" id="email" type="email" placeholder="example@gmail.com" required />
+                                            <input ref={inputEmail} className="bg-gray-900 text-gray-400 border-1 border-dark form-control" id="email" type="email" placeholder="example@gmail.com" required />
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +126,7 @@ function Settings() {
                                     <div className="col-md-6 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="Password">New Password</label>
-                                            <input ref={inputNewPassword} className="form-control" id="newpassword" type="password" placeholder="Password" />
+                                            <input ref={inputNewPassword} className="bg-gray-900 text-gray-400 border-1 border-dark form-control" id="newpassword" type="password" placeholder="Password" />
                                         </div>
                                     </div>
 
@@ -127,7 +134,7 @@ function Settings() {
                                     <div className="col-md-6 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="ConfirmPassword">Confirm Password</label>
-                                            <input ref={inputConfirmPassword} className="form-control" id="confirmpassword" type="password" placeholder="ConfirmPassword" />
+                                            <input ref={inputConfirmPassword} className="bg-gray-900 text-gray-400 border-1 border-dark form-control" id="confirmpassword" type="password" placeholder="ConfirmPassword" />
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +143,7 @@ function Settings() {
                                     <div className="col-sm12 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="apiUrl">API URL</label>
-                                            <input ref={inputApiUrl} className="form-control" id="apiUrl" type="text" placeholder="Enter the API URL." />
+                                            <input ref={inputApiUrl} className="bg-gray-900 text-gray-400 border-1 border-dark form-control" id="apiUrl" type="text" placeholder="Enter the API URL." />
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +151,7 @@ function Settings() {
                                     <div className="col-sm12 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="apiUrl">Access Key</label>
-                                            <input ref={inputAcessKey} className="form-control" id="accesskey" type="text" placeholder="Enter the Access Key." />
+                                            <input ref={inputAcessKey} className="bg-gray-900 text-gray-400 border-1 border-dark form-control" id="accesskey" type="text" placeholder="Enter the Access Key." />
                                         </div>
                                     </div>
                                 </div>
@@ -152,14 +159,14 @@ function Settings() {
                                     <div className="col-sm12 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="apiUrl">Secret Key</label>
-                                            <input ref={inputSecretKey} className="form-control" id="secretkey" type="password" placeholder="Enter the secret Key." />
+                                            <input ref={inputSecretKey} className="bg-gray-900 text-gray-400 border-1 border-dark form-control" id="secretkey" type="password" placeholder="Enter the secret Key." />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap">
-                                        <div className="col-sm-3">
-                                            <button className="btn btn-gray-800 mt-2 animate-up-2" type="submit">Save All</button>
+                                        <div className="col-sm12-3">
+                                            <button className="btn btn-success mt-2" type="submit">Save All</button>
                                         </div>
 
                                     </div>
@@ -169,6 +176,7 @@ function Settings() {
                         </div>
                     </div>
                 </div>
+                <Symbols /> 
             </main>
         </React.Fragment >
     )

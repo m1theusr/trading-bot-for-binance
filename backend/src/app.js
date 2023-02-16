@@ -6,17 +6,25 @@ const helmet = require('helmet');
 const authController = require ('./controllers/authController');
 const authMiddleware = require('./middlewares/authMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-const settingsController = require ('./controllers/settingsController')
 
-app.use(cors());
+const morgan = require ("morgan");
+
+app.use(cors({origin: process.env.CORS_ORIGIN}));
 
 app.use(helmet());
 
 app.use(express.json());
 
+app.use(morgan('dev'));
+
 app.post('/login', authController.doLogin);
 
-app.get('/settings', authMiddleware, settingsController.getSettings);
+const settingsRouter = require('./routers/settingsRouter')
+app.use('/settings', authMiddleware, settingsRouter);
+
+const symbolsRouter = require('./routers/symbolsRouter')
+app.use('/symbols', authMiddleware, symbolsRouter);
+
 
 app.post('/logout', authController.doLogout);
 

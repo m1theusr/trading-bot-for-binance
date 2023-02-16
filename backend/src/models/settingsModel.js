@@ -19,7 +19,7 @@ const settingsModel = database.define('settings', {
     apiUrl: Sequelize.STRING,
     accessKey: Sequelize.STRING,
     secretKey: Sequelize.STRING,
-    CreatedAt: Sequelize.DATE,
+    createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 },
     {
