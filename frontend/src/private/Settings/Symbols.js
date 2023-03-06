@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSymbols, syncSymbols } from '../../services/SymbolsService';
 import SymbolRow from './SymbolRow';
+import SelectQuote, {getDefaultQuote, filterSymbolObjects} from '../../components/SelectQuote/SelectQuote';
 
 function Symbols() {
 
@@ -11,6 +12,8 @@ function Symbols() {
 
     const [error, setError] = useState('');
 
+    const [quote, setQuote] = useState(getDefaultQuote());
+
     const [success, setSuccess] = useState('');
 
     const [isSyncing, setIsSyncing] = useState(false);
@@ -19,7 +22,7 @@ function Symbols() {
         const token = localStorage.getItem('token');
         getSymbols(token)
             .then(symbols => {
-                setSymbols(symbols);
+                setSymbols(filterSymbolObjects(symbols, quote));
             })
             .catch(err => {
                 if (err.response && err.response.status === 401) return history.push('/');
@@ -28,7 +31,7 @@ function Symbols() {
                 setSuccess('');
 
             })
-    }, [isSyncing]);
+    }, [isSyncing, quote]);
 
     function onSyncClick(event) {
         const token = localStorage.getItem('token');
@@ -46,6 +49,10 @@ function Symbols() {
             })
 
     }
+
+    function onQuoteChange(event){
+        setQuote(event.tartget.value);
+    }
     return (<React.Fragment>
 
         <div className="row">
@@ -56,6 +63,9 @@ function Symbols() {
                             <div className="row align-items-center">
                                 <div className="col">
                                     <h2 className="fs-5 fs-bold mb-0">Symbols</h2>
+                                </div>
+                                <div className="col-3">
+                                    <SelectQuote onChange={onQuoteChange}/>
                                 </div>
                             </div>
                         </div>
