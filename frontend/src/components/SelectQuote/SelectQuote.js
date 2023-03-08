@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+
+const DEFAULT_QUOTE_PROPERTY = "defaultQuote";
 
 /**
  * 
- * @param {*} props 
+ *  props 
  * onChange
- * @returns 
+ * 
  */
+
 
 
 function SelectQuote(props) {
 
-    const [defaultQuote, setDefaultQuote] = useState(getDefaultQuote());
+
+    const [defaultQuote] = useState(getDefaultQuote());
 
     return (
         <select id="selectQuote" className="form-select bg-gray-900 text-white" defaultValue={defaultQuote} onChange={props.onChange}>
@@ -28,7 +32,7 @@ function SelectQuote(props) {
 export function filterSymbolObjects(symbols, quote) {
     return symbols.filter(s => {
         if (quote === 'FAVORITES')
-            return s.IsFavorite;
+            return s.isFavorite;
         else
             return s.symbol.endsWith(quote);
     })
@@ -36,7 +40,12 @@ export function filterSymbolObjects(symbols, quote) {
 }
 
 export function getDefaultQuote() {
-    return localStorage.getItem("defaultQuote") ? localStorage.getItem("defaultQuote") : "USD";
+    return localStorage.getItem(DEFAULT_QUOTE_PROPERTY) ? localStorage.getItem(DEFAULT_QUOTE_PROPERTY) : "USD";
+}
+
+export function setDefaultQuote(quote){
+    localStorage.setItem(DEFAULT_QUOTE_PROPERTY, quote);
+
 }
 
 export default SelectQuote;

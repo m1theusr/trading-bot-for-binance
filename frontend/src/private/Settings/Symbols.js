@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSymbols, syncSymbols } from '../../services/SymbolsService';
 import SymbolRow from './SymbolRow';
-import SelectQuote, {getDefaultQuote, filterSymbolObjects} from '../../components/SelectQuote/SelectQuote';
+import SelectQuote, {getDefaultQuote, filterSymbolObjects, setDefaultQuote} from '../../components/SelectQuote/SelectQuote';
 
 function Symbols() {
 
@@ -51,7 +51,8 @@ function Symbols() {
     }
 
     function onQuoteChange(event){
-        setQuote(event.tartget.value);
+        setQuote(event.target.value);
+        setDefaultQuote(event.target.value);
     }
     return (<React.Fragment>
 
