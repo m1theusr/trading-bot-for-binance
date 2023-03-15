@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSymbols, syncSymbols } from '../../services/SymbolsService';
 import SymbolRow from './SymbolRow';
-import SelectQuote, {getDefaultQuote, filterSymbolObjects, setDefaultQuote} from '../../components/SelectQuote/SelectQuote';
+import SelectQuote, { getDefaultQuote, filterSymbolObjects, setDefaultQuote } from '../../components/SelectQuote/SelectQuote';
+import SymbolModal from './SymbolModal';
 
 function Symbols() {
 
@@ -50,15 +51,20 @@ function Symbols() {
 
     }
 
-    function onQuoteChange(event){
+    function onQuoteChange(event) {
         setQuote(event.target.value);
         setDefaultQuote(event.target.value);
     }
+
+    function onEditClick(event){
+        event.target.id
+    }
+
     return (<React.Fragment>
 
         <div className="row">
             <div className="col-12">
-                <div className="col-12 mb-4">
+                <div className="col-12 p-0">
                     <div className="card border-0 shadow">
                         <div className="bg-gray-900 card-header">
                             <div className="row align-items-center">
@@ -66,7 +72,7 @@ function Symbols() {
                                     <h2 className="fs-5 fs-bold mb-0">Symbols</h2>
                                 </div>
                                 <div className="col-3">
-                                    <SelectQuote onChange={onQuoteChange}/>
+                                    <SelectQuote onChange={onQuoteChange} />
                                 </div>
                             </div>
                         </div>
@@ -83,11 +89,11 @@ function Symbols() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {symbols.map(item => <SymbolRow key={item.symbol} data={item} />)}
+                                    {symbols.map(item => <SymbolRow key={item.symbol} data={item} onClick={onEditClick} />)}
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td className="bg-gray-900" colSpan="12">
+                                        <td className="bg-gray-900 border-0" colSpan="6">
                                             <button className="btn btn-primary" type="button" onClick={onSyncClick}>
                                                 <svg className="icon icon-xs" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
@@ -96,7 +102,7 @@ function Symbols() {
                                                     ? "Syncing..."
                                                     : "Sync"
                                                 }
-                                                
+
                                             </button>
                                         </td>
                                         {success
@@ -120,7 +126,7 @@ function Symbols() {
         </div>
 
 
-
+        <SymbolModal data={} />
 
     </React.Fragment>);
 
