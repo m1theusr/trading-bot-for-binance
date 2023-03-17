@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef} from 'react';
+import { updateSymbol } from '../../services/SymbolsService';
 
 /*
 *props
 * - data
-*
+* - onSubmit
 */
 
 function SymbolModal(props) {
@@ -26,6 +27,15 @@ function SymbolModal(props) {
 
     }
     function onSubmit(event) {
+        event.preventDefault();
+        const token = localStorage.getItem('token');
+        updateSymbol(symbol, token)
+        .then(result =>{
+            btnClose.current.click();
+            setError('');
+            props.onSubmit({target: {id: 'symbol', value: symbol}});
+        })
+        .catch(err => setError(err.respose ? err.respose.data : err.message));
 
     }
 

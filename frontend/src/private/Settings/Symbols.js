@@ -13,6 +13,14 @@ function Symbols() {
 
     const [error, setError] = useState('');
 
+    const [editSymbol, setEditSymbol] = useState({
+        symbol: '',
+        basePrecision: '',
+        quotePrecision: '',
+        minLotSize: '',
+        minNotional:'',
+    });
+
     const [quote, setQuote] = useState(getDefaultQuote());
 
     const [success, setSuccess] = useState('');
@@ -51,13 +59,40 @@ function Symbols() {
 
     }
 
+    function errorHandling(err) {
+        console.error(err.response ? err.response.data : err.message);
+        setError(err.response ? err.response.data : err.message);
+        setSuccess('');
+    }
+
     function onQuoteChange(event) {
         setQuote(event.target.value);
         setDefaultQuote(event.target.value);
     }
 
-    function onEditClick(event){
-        event.target.id
+    function onEditSymbol(event){
+ 
+        const symbol = event.target.id.replace('edit', '');
+        const symbolObj = symbols.find(s =>s.symbol ===symbol);
+        setEditSymbol(symbolObj);
+    }
+
+
+    function loadSymbols(){
+        const token = localStorage.getItem('token');
+        getSymbols(token)
+            .then(symbols => {
+                setSymbols(filterSymbolObjects(symbols, quote));
+            })
+            .catch(err => errorHandling(err))
+    }
+
+    useEffect(() => {
+        loadSymbols(); 
+    }, [isSyncing, quote])
+
+    function onModalSubmit(event){
+        loadSymbols();
     }
 
     return (<React.Fragment>
@@ -89,7 +124,7 @@ function Symbols() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {symbols.map(item => <SymbolRow key={item.symbol} data={item} onClick={onEditClick} />)}
+                                    {symbols.map(item => <SymbolRow key={item.symbol} data={item} onClick={onEditSymbol} />)}
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -126,7 +161,7 @@ function Symbols() {
         </div>
 
 
-        <SymbolModal data={} />
+        <SymbolModal data={editSymbol} onSubmit={onModalSubmit} />
 
     </React.Fragment>);
 
