@@ -18,28 +18,34 @@ async function updateSymbol(symbol, newSymbol) {
     if (newSymbol.basePrecision && newSymbol.basePrecision !== currentSymbol.basePrecision)
         currentSymbol.basePrecision = newSymbol.basePrecision;
 
-    if (newSymbol.quotePrecision &&newSymbol.quotePrecision !== currentSymbol.quotePrecision)
+    if (newSymbol.quotePrecision && newSymbol.quotePrecision !== currentSymbol.quotePrecision)
         currentSymbol.quotePrecision = newSymbol.quotePrecision;
 
-    if (newSymbol.minNotional &&newSymbol.minNotional !== currentSymbol.minNotional)
+    if (newSymbol.minNotional && newSymbol.minNotional !== currentSymbol.minNotional)
         currentSymbol.minNotional = newSymbol.minNotional;
 
-    if (newSymbol.minLotSize &&newSymbol.minLotSize !== currentSymbol.minLotSize)
+    if (newSymbol.base && newSymbol.base !== currentSymbol.base)
+        currentSymbol.base = newSymbol.base;
+
+    if (newSymbol.quote && newSymbol.quote !== currentSymbol.quote)
+        currentSymbol.quote = newSymbol.quote;
+
+    if (newSymbol.minLotSize && newSymbol.minLotSize !== currentSymbol.minLotSize)
         currentSymbol.minLotSize = newSymbol.minLotSize;
 
     if (newSymbol.isFavorite !== null && newSymbol.isFavorite !== undefined &&
-         newSymbol.isFavorite !== currentSymbol.isFavorite)
+        newSymbol.isFavorite !== currentSymbol.isFavorite)
         currentSymbol.isFavorite = newSymbol.isFavorite;
 
     await currentSymbol.save();
 }
 
-async function deleteAll(){
-    return symbolModel.destroy({truncate: true});
+async function deleteAll() {
+    return symbolModel.destroy({ truncate: true });
 }
 
-async function bulkInsert(symbols){
-    symbolModel.bulkCreate(symbols);    
+async function bulkInsert(symbols) {
+    symbolModel.bulkCreate(symbols);
 }
 
 module.exports = {

@@ -7,6 +7,10 @@ const symbolModel = database.define('symbol', {
         allowNull: false,
         primaryKey: true
     },
+
+    quote: Sequelize.STRING,
+    base: Sequelize.STRING,
+
     basePrecision: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -24,6 +28,11 @@ const symbolModel = database.define('symbol', {
         allowNull: false,
     },
     isFavorite: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+    },
+    base: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false,

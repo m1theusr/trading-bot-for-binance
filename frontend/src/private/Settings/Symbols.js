@@ -73,7 +73,7 @@ function Symbols() {
     function onEditSymbol(event){
  
         const symbol = event.target.id.replace('edit', '');
-        const symbolObj = symbols.find(s =>s.symbol ===symbol);
+        const symbolObj = symbols.find(s =>s.symbol === symbol);
         setEditSymbol(symbolObj);
     }
 
