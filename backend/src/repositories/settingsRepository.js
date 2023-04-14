@@ -29,6 +29,10 @@ function getSettings(id) {
 
 }
 
+function getDefaultSettings(){
+    return settingsModel.findone();
+}
+
 async function updateSettings(id, newSettings) {
     const currentSettings = await getSettings(id);
 
@@ -55,5 +59,6 @@ module.exports = {
     getSettings,
     updateSettings,
     getDecryptedSettings,
-    clearSettingsCache
+    clearSettingsCache,
+    getDefaultSettings
 }
