@@ -4,6 +4,7 @@ import '../Dashboard.css';
 import { useHistory } from 'react-router-dom';
 import TickerRow from '../MiniTicker/TickerRow';
 import {getSymbols} from '../../../services/SymbolsService';
+import BookRow from './BookRow';
 /**
  * props: 
  * -data
@@ -59,10 +60,9 @@ function BookTicker(props) {
                                 </thead>
                                 <tbody>
                                     {
-                                        symbols.map(item => (
-                                            <TickerRow key={item} symbol={item} data={props.data[item]} />
+                                       Array.isArray(symbols) && symbols.map(item =>(
+                                            <BookRow key={item} symbol={item} data={props.data[item]} />
                                         ))
-
                                     }
                                 </tbody>
                             </table>
