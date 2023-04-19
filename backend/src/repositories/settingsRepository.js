@@ -30,7 +30,7 @@ function getSettings(id) {
 }
 
 function getDefaultSettings(){
-    return settingsModel.findone();
+    return settingsModel.findOne();
 }
 
 async function updateSettings(id, newSettings) {

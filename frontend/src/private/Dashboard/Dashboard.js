@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import useWebsocket from 'react-use-websocket';
 import Menu from '../../components/Menu/Menu';
 import LineChart from './LineChart';
 import MiniTicker from './MiniTicker/MiniTicker';
+import BookTicker from './bookTicker/BookTicker';
 
-function Dashboard(){
+function Dashboard() {
 
     const [miniTickerState, setMiniTickerState] = useState({});
+    
+    const [bookState, setBookState] = useState({});
 
-    const {lastJsonMessage } = useWebsocket(process.env.REACT_APP_WS_URL, {
+    const { lastJsonMessage } = useWebsocket(process.env.REACT_APP_WS_URL, {
         onOpen: () => console.log(`Connected to app Web Server`),
         onMessage: () => {
-            if(lastJsonMessage){
-                if(lastJsonMessage.miniTicker) setMiniTickerState(lastJsonMessage.miniTicker);   
+            if (lastJsonMessage) {
+                if (lastJsonMessage.miniTicker) setMiniTickerState(lastJsonMessage.miniTicker);
+                if(lastJsonMessage.book) setBookState(lastJsonMessage.book);
             }
         },
         queryParams: {},
@@ -21,21 +25,25 @@ function Dashboard(){
         reconnectInterval: 3000
     })
 
-    return(
+    return (
         <React.Fragment>
             <Menu />
-            <main className="text-gray-300 bg-gray-800 content">
+            <main className="text-gray-300 bg-dark content">
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
                     <div className="d-block mb-2 mb mb-0">
                         <h2 className="h4">Dashboard</h2>
                     </div>
                 </div>
                 <LineChart />
-                <MiniTicker data={miniTickerState}/>
+                <MiniTicker data={miniTickerState} />
+                <div className="row">
+                    <BookTicker data={bookState} />
+                </div>
+
             </main>
         </React.Fragment>
-        
-        );
+
+    );
 
 }
 

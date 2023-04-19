@@ -18,7 +18,7 @@ function Symbols() {
         basePrecision: '',
         quotePrecision: '',
         minLotSize: '',
-        minNotional:'',
+        minNotional: '',
     });
 
     const [quote, setQuote] = useState(getDefaultQuote());
@@ -70,15 +70,15 @@ function Symbols() {
         setDefaultQuote(event.target.value);
     }
 
-    function onEditSymbol(event){
- 
+    function onEditSymbol(event) {
+
         const symbol = event.target.id.replace('edit', '');
-        const symbolObj = symbols.find(s =>s.symbol === symbol);
+        const symbolObj = symbols.find(s => s.symbol === symbol);
         setEditSymbol(symbolObj);
     }
 
 
-    function loadSymbols(){
+    function loadSymbols() {
         const token = localStorage.getItem('token');
         getSymbols(token)
             .then(symbols => {
@@ -88,10 +88,10 @@ function Symbols() {
     }
 
     useEffect(() => {
-        loadSymbols(); 
+        loadSymbols();
     }, [isSyncing, quote])
 
-    function onModalSubmit(event){
+    function onModalSubmit(event) {
         loadSymbols();
     }
 
@@ -101,8 +101,22 @@ function Symbols() {
             <div className="col-12">
                 <div className="col-12 p-0">
                     <div className="card border-0 shadow">
-                        <div className="bg-gray-900 card-header">
+                        <div className="bg-gray-800 card-header">
                             <div className="row align-items-center">
+                                {success
+                                    ? <div className="alert alert-success">{success}
+                                        <buttom className="btn-close" data-bs-dismiss="alert"></buttom>
+                                    </div>
+                                    : <React.Fragment></React.Fragment>
+
+                                }
+                                {error
+                                    ? <div className="alert alert-danger">{error}
+                                        <buttom className="col btn-close" data-bs-dismiss="alert"></buttom>
+                                    </div>
+                                    : <React.Fragment></React.Fragment>
+
+                                }
                                 <div className="col">
                                     <h2 className="fs-5 fs-bold mb-0">Symbols</h2>
                                 </div>
@@ -128,7 +142,7 @@ function Symbols() {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td className="bg-gray-900 border-0" colSpan="6">
+                                        <td className="bg-gray-800 border-0" colSpan="6">
                                             <button className="btn btn-primary" type="button" onClick={onSyncClick}>
                                                 <svg className="icon icon-xs" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
@@ -140,17 +154,9 @@ function Symbols() {
 
                                             </button>
                                         </td>
-                                        {success
-                                            ? <div className="alert alert-success">{success} </div>
-                                            : <React.Fragment></React.Fragment>
 
-                                        }
-                                        {error
-                                            ? <div className="alert alert-danger">{error} </div>
-                                            : <React.Fragment></React.Fragment>
-
-                                        }
                                     </tr>
+
                                 </tfoot>
                             </table>
                         </div>

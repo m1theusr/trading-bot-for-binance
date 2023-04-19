@@ -5,7 +5,7 @@ function LineChart(){
         <React.Fragment>
             <div class="row">
                 <div class="col-12 mb-4">
-                    <div class="card bg-dark border-0 shadow">
+                    <div class="card bg-gray-800 border-0 shadow">
                         <div class="card-header d-sm-flex flex-row align-items-center flex-0">
                             <div class="d-block mb-3 mb-sm-0">
                                 <div class="fs-5 fw-normal mb-2">Sales Value</div>

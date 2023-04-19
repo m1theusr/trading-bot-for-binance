@@ -6,18 +6,29 @@ module.exports = (settings, wss) => {
     if (!settings) throw new Error(`Can't start Exchange Monitor without settings.`);
 
     settings.secretKey= crypto.decrypt(settings.secretKey);
+
     const exchange = require('./utils/exchange')(settings);
 
-    exchange.miniTickerStream((markets) =>{
-        //console.log(markets);
-        if(!wss || !wss.clients) return;
+    exchange.miniTickerStream((markets) => {
+        if (!wss || wss.clients) return;
         wss.clients.forEach(client => {
-            if(client.readyState === WebSocket.OPEN){
-                client.send(JSON.stringify({miniTicker: markets}));
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify({ miniTicker: markets }));
             }
+        })
+        
+        const books = Objects.entries(markets).map(mkt => {
+            return { symbol: mkt[0], bestAsk: mkt[1].close, bestBid: mkt[1].close };
+        })
 
-        });
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify({ book: books }));
+            }
+        })
+
+        console.log(`App Exchange Monitor is running`);
     })
 
-    console.log(`App Exchange Monitor is running`);
+
 }

@@ -14,7 +14,7 @@ import React from 'react';
 function SymbolRow(props) {
     return (
 
-        <tr className="border-dark bg-gray-900">
+        <tr className="border-dark bg-gray-800">
             <td className="text-white">
                 {props.data.symbol} 
                 {props.data.isFavorite

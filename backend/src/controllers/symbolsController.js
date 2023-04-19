@@ -43,7 +43,7 @@ async function syncSymbols(req, res, next) {
             quotePrecision: item.quoteAssetPrecision,
             base: item.baseAsset,
             quote: item.quoteAsset,
-            minNotional: minLotSizeFilter ? minNotionalFilter.minNotional : '1',
+            minNotional: minNotionalFilter ? minNotionalFilter.minNotional : '1',
             minLotSize: minLotSizeFilter ? minLotSizeFilter.minQty : '1',
             isFavorite: favoriteSymbols.some(s => s === item.symbol)
 

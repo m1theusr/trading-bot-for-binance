@@ -9,18 +9,20 @@ function onError(){
 }
 
 function onConnection(ws, req){
+
     ws.on('message', onMessage );
     ws.on('error', onError );
     console.log(`onConnection`)
 }
 
 module.exports = (server) => {
+
     const wss = new WebSocket.Server({
         server
     });
 
     wss.on('connection', onConnection);
-    console.log(`APP Web Socket server is Running!`);
+    console.log(`APP WebSocket server is Running!`);
     return wss;
     
 }

@@ -11,9 +11,9 @@ module.exports = {
     const settingsId = await queryInterface.rawSelect('settings', { where: {}, limit: 1 }, ['id']);
     if (!settingsId) {
       return queryInterface.bulkInsert('settings', [{
-        email: 'matheus@gmail.com',
+        email: 'm@gmail.com',
         password: bcrypt.hashSync('M1theuss'),
-        apiUrl: 'https://testenet.binance.vision/api/',
+        apiUrl: 'https://testnet.binance.vision/api/',
         accessKey: 'qPXoVwTGzyyBZ0WK7TXyEG35ucHrdGrP0TtXA1JYTPjr2jjurFZdxp6e1auAPHSe',
         secretKey: crypto.encrypt('4PyBM0h42f8au8osbGD03C1kHc6OCKMN0EMYa3yLDTuDRnkhA5WrieKpFdVthvSX'),
         createdAt: new Date(),

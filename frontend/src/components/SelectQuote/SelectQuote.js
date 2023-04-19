@@ -17,7 +17,7 @@ function SelectQuote(props) {
     const [defaultQuote] = useState(getDefaultQuote());
 
     return (
-        <select id="selectQuote" className="form-select bg-gray-900 text-white" defaultValue={defaultQuote} onChange={props.onChange}>
+        <select id="selectQuote" className="form-select bg-gray-800 text-gray-300" defaultValue={defaultQuote} onChange={props.onChange}>
             <option value="FAVORITES">Favorites</option>
             <option value="BNB">BNB</option>
             <option value="BRL">BRL</option>
@@ -37,6 +37,10 @@ export function filterSymbolObjects(symbols, quote) {
             return s.symbol.endsWith(quote);
     })
 
+}
+
+export function filterSymbolNames(symbols, quote){
+    return filterSymbolObjects(symbols, quote).map(s =>s.symbol);
 }
 
 export function getDefaultQuote() {

@@ -4,7 +4,7 @@ const settingsRepository = require('./repositories/settingsRepository');
 const appEm = require ('./app-em');
 const appWs =require ('./app-ws');
 
-settingsRepository.getSettings(1)
+settingsRepository.getDefaultSettings()
     .then(settings => {
         const server = app.listen(process.env.PORT, () => {
             console.log('App is running', process.env.PORT);

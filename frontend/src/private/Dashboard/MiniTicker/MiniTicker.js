@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import SelectQuote from '../../../components/SelectQuote/SelectQuote';
+import SelectQuote, {filterSymbolNames, getDefaultQuote} from '../../../components/SelectQuote/SelectQuote';
 import TickerRow from './TickerRow';
 import {getSymbols} from '../../../services/SymbolsService';
 import { useHistory } from 'react-router-dom';
+import '../Dashboard.css';
+
 /**
  * props: 
  * - data   
@@ -14,14 +16,12 @@ function MiniTicker(props){
 
     const [symbols, setSymbols] = useState([]);
 
-    const [quote, setQuote] = useState('');
-
-    if(!props || !props.data) return (<React.Fragment></React.Fragment>);
+    const [quote, setQuote] = useState(getDefaultQuote());
 
     useEffect(() =>{
         const token = localStorage.getItem('token');
         getSymbols(token)
-            .then(symbols => setSymbols())
+            .then(symbols => setSymbols(filterSymbolNames(symbols, quote)))
             .catch(err =>{
                 if(err.response && err.response.status === 401) return history.push('/')
                 console.error(err);
@@ -31,21 +31,23 @@ function MiniTicker(props){
     function onQuoteChange(event){
         setQuote(event.target.value);
     }
+    
+    if(!props || !props.data) return (<React.Fragment></React.Fragment>);
 
     return(
-        <div className="col-12 mb-4">
-            <div className="bg-dark card border-0 shadow">
+        <div className="p-0 col-12 mb-4">
+            <div className="bg-gray-800 card border-0 shadow">
                 <div className="card-header">
                     <div className="row">
                             <div className="col">
                                 <h2 className="fs-5 fw-bold mb-0">Market 24Hrs</h2>
                             </div>
-                            <div className="col offset-md-3">
+                            <div className="mb-2 col-3">
                             <SelectQuote onChange={onQuoteChange} />
                             </div>   
                     </div>
-                    <div className="table-responsive">
-                        <table className="table align-items-center table flush table-sm table-hover">
+                    <div className="table-responsive divScroll">
+                        <table className="table align-items-center table flush table-sm table-hover tableFixHead">
                             <thead className="thead-dark">
                                 <tr>
                                     <th className="border-bottom" scope="col">SYMBOL</th>
@@ -57,8 +59,8 @@ function MiniTicker(props){
                             </thead>
                             <tbody>
                             {
-                                Object.entries(props.data).map(item =>(
-                                <TickerRow data={item[0]} />
+                               symbols.map(item =>(
+                                <TickerRow key={item} symbol={item} data={props.data[item]} />
                             ))
                             
                             }
