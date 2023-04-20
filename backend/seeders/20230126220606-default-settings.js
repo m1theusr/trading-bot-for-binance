@@ -14,6 +14,7 @@ module.exports = {
         email: 'm@gmail.com',
         password: bcrypt.hashSync('M1theuss'),
         apiUrl: 'https://testnet.binance.vision/api/',
+        streamUrl: 'wss://testnet.binance.vision/ws/',  
         accessKey: 'qPXoVwTGzyyBZ0WK7TXyEG35ucHrdGrP0TtXA1JYTPjr2jjurFZdxp6e1auAPHSe',
         secretKey: crypto.encrypt('4PyBM0h42f8au8osbGD03C1kHc6OCKMN0EMYa3yLDTuDRnkhA5WrieKpFdVthvSX'),
         createdAt: new Date(),

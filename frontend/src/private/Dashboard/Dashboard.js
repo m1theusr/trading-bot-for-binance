@@ -40,7 +40,7 @@ function Dashboard() {
                 <LineChart />
                 <MiniTicker data={miniTickerState} />
                 <div className="row">
-                    <BookTicker data={bookState} />
+
                 </div>
 
             </main>
