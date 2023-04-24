@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import useWebsocket from 'react-use-websocket';
 import Menu from '../../components/Menu/Menu';
-import LineChart from './LineChart';
 import MiniTicker from './MiniTicker/MiniTicker';
 import BookTicker from './bookTicker/BookTicker';
+import Wallet from './Wallet/Wallet';
+import CandleChart from './CandleChart';
 
 function Dashboard() {
 
@@ -22,7 +23,7 @@ function Dashboard() {
                 } 
             }
         },
-        queryParams: {},
+        queryParams: {"token": localStorage.getItem('token')},
         onError: (err) => console.error(err),
         shouldReconnect: (CloseEvent) => true,
         reconnectInterval: 3000
@@ -37,10 +38,11 @@ function Dashboard() {
                         <h2 className="h4">Dashboard</h2>
                     </div>
                 </div>
-                <LineChart />
+                <CandleChart symbol="BTCUSD" />
                 <MiniTicker data={miniTickerState} />
                 <div className="row">
-
+                <BookTicker data={bookState} />
+                <Wallet  />
                 </div>
 
             </main>

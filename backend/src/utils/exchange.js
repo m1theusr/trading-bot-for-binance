@@ -9,9 +9,14 @@ module.exports = (settings) => {
         APISECRET: settings.secretKey,
         family: 0,
         urls: {
-            base: settings.apiUrl.endsWith('/') ? settings.apiUrl : settings.apiUrl + '/'
+            base: settings.apiUrl.endsWith('/') ? settings.apiUrl : settings.apiUrl + '/',
+            stream: settings.streamUrl.endsWith('/') ? settings.streamUrl : settings.streamUrl + '/',
         }
     })
+
+    function balance(){
+        return binance.balance()
+    }
 
     function exchangeInfo(){
             return binance.exchangeInfo();
@@ -21,10 +26,22 @@ module.exports = (settings) => {
         binance.websockets.miniTicker(markets => callback(markets));
     }
 
+    function userDataStream(balanceCallback, executionCallback, listStatusCallback){
+        binance.websockets.userData(
+            balance => balanceCallback(balance),
+            executionData => executionCallback(executionData),
+            subscribedData => console.log(`userDataStream:subscribed:, ${subscribedData}`),
+            listStatusData => listStatusCallback(listStatusCallback),
+        )
+
+    }
+
  
 
     return {
         exchangeInfo,
         miniTickerStream,
+        userDataStream,
+        balance
     }
 }

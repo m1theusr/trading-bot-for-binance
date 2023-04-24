@@ -11,5 +11,14 @@
 
 .divScroll {
     overflow: auto;
-    max-height: 300px;
+    max-height: 250px;
+}
+
+.cardDark {
+    background-color: #363c4e;
+
+}
+
+.divTradingView {
+    height: 500px;
 }
