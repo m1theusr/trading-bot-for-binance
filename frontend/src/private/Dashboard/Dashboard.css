@@ -1,6 +1,7 @@
 .tableFixHead{
     overflow: auto;
     height: 100px;
+    
 }
 
 .tableFixHead thead th{
@@ -10,8 +11,10 @@
 }
 
 .divScroll {
+
     overflow: auto;
     max-height: 250px;
+    
 }
 
 .cardDark {
@@ -22,3 +25,4 @@
 .divTradingView {
     height: 500px;
 }
+

@@ -36,7 +36,7 @@ function CandleChart(props) {
 
     const widgetHtml = useMemo(() => (
         <div className="row">
-            <div className="col-12 mb-4">
+            <div className="col-12 mb-4 container">
                 <div className="card cardDark border-0 shadow">
                     <div className="tradingview-widget-container">
                         <div id="tradingview" className="divTradingView"></div>

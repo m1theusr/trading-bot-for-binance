@@ -35,7 +35,7 @@ function MiniTicker(props){
     if(!props || !props.data) return (<React.Fragment></React.Fragment>);
 
     return(
-        <div className="p-0 col-12 mb-4">
+        <div className="p-0 col-12 mb-4 container">
             <div className="bg-gray-800 card border-0 shadow">
                 <div className="card-header">
                     <div className="row">

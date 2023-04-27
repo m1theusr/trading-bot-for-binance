@@ -15,44 +15,50 @@ function Wallet(props) {
     const history = useHistory();
 
     const [balances, setBalances] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
+
+    const filterBalances = (balances, searchInput) => {
+        return balances.filter((balance) =>
+            balance.symbol.toLowerCase().includes(searchInput.toLowerCase())
+        );
+    };
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         getBalance(token)
-            .then(info => {
-
-                const balances = Object.entries(info).map(item => {
-                    return {
-                        symbol: item[0],
-                        available: item[1].available,
-                        onOrder: item[1].onOrder
-                    }
-                })
-
-
-
-                setBalances(balances)
-
+            .then((info) => {
+                const balances = Object.entries(info).map((item) => ({
+                    symbol: item[0],
+                    available: item[1].available,
+                    onOrder: item[1].onOrder,
+                }));
+                setBalances(balances);
             })
-            .catch(err => {
-                if (err.response && err.response.status === 401) return history.push('/')
+            .catch((err) => {
+                if (err.response && err.response.status === 401) {
+                    return history.push('/');
+                }
                 console.error(err);
-            })
-    }, [props.data])
+            });
+    }, [props.data]);
 
+    const filteredBalances = filterBalances(balances, searchInput);
 
     return (
-
-        <div className="col-md-6 col-sm-12 mb-4">
+        <div className="col-md-6 col-sm-12 mb-4 container">
             <div className="card border-0 shadow">
                 <div className="bg-gray-800 card-header">
                     <div className="row">
                         <div className="col">
                             <h2 className="fs-5 fw-bold-mb-0">Wallet</h2>
-
-                                <input type="text" class="col-4 bg-gray-800 form-control" placeholder="Search your crypto." />
-
-
+                                
+                            <input
+                                type="text"
+                                className="bg-gray-800 form-control form-control-sm"
+                                placeholder="Search your crypto."
+                                value={searchInput}
+                                onChange={(ev) => setSearchInput(ev.target.value)}
+                            />
                         </div>
                     </div>
                 </div>
@@ -60,28 +66,31 @@ function Wallet(props) {
                     <table className="table align-items-center table-flush table-sm table-hover tableFixHead">
                         <thead className="thead-dark">
                             <tr>
-                                <th className="border-bottom" scope="col">SYMBOL</th>
-                                <th className="border-bottom" scope="col">FREE</th>
-                                <th className="border-bottom" scope="col">LOCK</th>
+                                <th className="border-bottom" scope="col">
+                                    SYMBOL
+                                </th>
+                                <th className="border-bottom" scope="col">
+                                    FREE
+                                </th>
+                                <th className="border-bottom" scope="col">
+                                    LOCK
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="bg-gray-800">
-                            {
-                                balances.map(item => (
-                                    <tr key={`Wallet${item.symbol}`}>
-                                        <td className="text-gray-300">{item.symbol}</td>
-                                        <td className="text-gray-300">{item.available.substring(0, 8)}</td>
-                                        <td className="text-gray-300">{item.onOrder.substring(0, 8)}</td>
-                                    </tr>
-                                ))
-                            }
+                            {filteredBalances.map((item) => (
+                                <tr key={`Wallet${item.symbol}`}>
+                                    <td className="text-gray-300">{item.symbol}</td>
+                                    <td className="text-gray-300">{item.available.substring(0, 8)}</td>
+                                    <td className="text-gray-300">{item.onOrder.substring(0, 8)}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
-
-    )
+    );
 }
+
 export default Wallet;
