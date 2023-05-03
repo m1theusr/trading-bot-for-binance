@@ -6,6 +6,7 @@ import BookTicker from './bookTicker/BookTicker';
 import Wallet from './Wallet/Wallet';
 import CandleChart from './CandleChart';
 import NewOrderButton from '../../components/NewOrder/NewOrderButton';
+import NewOrderModal from '../../components/NewOrder/NewOrderModal';
 
 function Dashboard() {
 
@@ -50,6 +51,7 @@ function Dashboard() {
 
                 </div>
             </main>
+            <NewOrderModal />
         </React.Fragment>
 
     );
