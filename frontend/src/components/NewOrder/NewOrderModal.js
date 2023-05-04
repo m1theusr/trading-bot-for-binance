@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import SelectSymbol from "./SelectSymbol";
 import SymbolPrice from "./SymbolPrice";
+import WalletSummary from "./WalletSummary";
 
 function NewOrderModal() {
 
@@ -28,8 +29,8 @@ function NewOrderModal() {
 
     }
 
-    function onInputChange(event){
-        setOrder(prevState => ({ ...prevState, [event.target.id]: event.target.value}));
+    function onInputChange(event) {
+        setOrder(prevState => ({ ...prevState, [event.target.id]: event.target.value }));
     }
 
 
@@ -49,11 +50,18 @@ function NewOrderModal() {
                     </div>
                     <div className="modal-body">
                         <div className="form-group">
-                            <div className="col-md-6 mb-3">
-                                <SelectSymbol onClick={onInputChange} />
+                            <div className="row">
+                                <div className="col-md-6 mb-3">
+                                    <SelectSymbol onClick={onInputChange} />
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <SymbolPrice symbol={order.symbol} />
+                                </div>
                             </div>
-                            <div className="col-md-6 mb-3">
-                                <SymbolPrice symbol={order.symbol} />
+                            <div className="row">
+                                <div className="col-md-6 mb-3">
+                                    <WalletSummary />
+                                </div>
                             </div>
                         </div>
 
